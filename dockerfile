@@ -3,10 +3,10 @@ FROM python:3.10-slim
 # Set working directory
 WORKDIR /app
 
-# Copy 'example' folder into container
+# Copy 'example' folder and 'testData' folder into container under /app
 COPY example /app
 
-# Install required Python packages (pandas 1.5.3 + compatible numpy + Jupyter + kernel)
+# Install required Python packages
 RUN pip install --no-cache-dir \
     numpy==1.23.5 \
     pandas==1.5.3 \
@@ -17,13 +17,10 @@ RUN pip install --no-cache-dir \
     scikit-learn \
     statsmodels
 
-# Optional: install more if your code uses these:
-# RUN pip install seaborn plotly openpyxl xlrd
-
 # Expose Jupyter Notebook port
 EXPOSE 8888
 
-# Register Jupyter kernel inside Docker
+# Register Jupyter kernel
 RUN python -m ipykernel install --user --name=midas-env --display-name "Python (midas-env)"
 
 # Start Jupyter Notebook
